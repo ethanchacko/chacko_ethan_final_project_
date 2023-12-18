@@ -1,10 +1,17 @@
-# This file was created by: Ethan Chacko
+# This file was created by: Chris Cozort
+# Content from Chris Bradfield; Kids Can Code
+# KidsCanCode - Game Development with Pygame video series
+# Video link: https://youtu.be/OmlQ0XCvIn0 
 
- 
-# Defining the colors and their values
-BLACK = (0, 0, 0)
+# game settings 
+
+WIDTH = 600
+HEIGHT = 720
+FPS = 60
+
+# player properties
+
+
+# defining colors
 WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-FPS = 90
-
-WIDTH, HEIGHT = 600, 720
+BLACK = (0, 0, 0,)

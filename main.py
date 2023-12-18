@@ -18,96 +18,88 @@
 
 
 # import libraries and modules
-import pygame as pg
-from pygame.sprite import Sprite
-import random
-from random import randint
+#This file was made by: Ethan Chacko
+# content from kids can code: http://kidscancode.org/blog/
+
+import pygame as pg 
 from settings import *
 from sprites import *
 
-
 class Game:
-    pg.init()
+    def __init__(self):
+        # Initializing pygame, and creating the window, and setting window parameters
+        pg.init()
+        pg.mixer.init()
+        self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        pg.display.set_caption("Tennis Game")
+        self.clock = pg.time.Clock()
+        self.running = True
 
-    def main():
-        pg.display.set_caption("Tennis")
-        # Used to adjust the frame rate
-        clock = pg.time.Clock()
-        running = True
- 
-        # Defining the objects
-        p1 = Player(220, 50, 100, 10, 10, WHITE)
-        p2 = Computer(320, 650, 100, 10, 10, WHITE)
-        ball = Ball(WIDTH//2, HEIGHT//2, 7, 7, WHITE)
+    def new(self):
+        self.all_sprites = pg.sprite.Group()
+        self.all_players = pg.sprite.Group()
+        self.player = Player()
+        self.computer = Computer()
+        self.ball = Ball()
+        self.all_sprites.add(self.player)
+        self.all_sprites.add(self.computer)
+        self.all_sprites.add(self.ball)
+        self.all_players.add(self.player)
+        self.all_players.add(self.computer)
+        g.run()
 
-        listOfPlayers = [p1, p2]
-
-        # Used to render the score on to the screen
-
+    def run(self):
+        self.playing = True
+        while self.playing:
+            self.clock.tick(FPS)
+            self.events()
     
+            self.update()
+            self.draw()
+
+    def update(self):
+        # Update 
+    
+        self.all_sprites.update()
+        self.collisions()
+
         
-        # Initial parameters of the Player and Computer
-        p1Score, p2Score = 0, 0
-        p1xvel, p2xvel = 0, 0
-    
-        while running:
-            screen.fill(BLACK)
+    def collisions(self):
+         hits = pg.sprite.spritecollide(self.ball, self.all_players, False)
+         if hits:
+            self.ball.speedy *= -1.5
 
-        # Event handling
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    running = False
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_LEFT:
-                        p2xvel = -1
-                    if event.key == pg.K_RIGHT:
-                        p2xvel = 1
-                    if event.key == pg.K_a:
-                        p1xvel = -1
-                    if event.key == pg.K_d:
-                        p1xvel = 1
-                if event.type == pg.KEYUP:
-                    if event.key == pg.K_RIGHT or event.key == pg.K_LEFT:
-                        p2xvel = 0
-                    if event.key == pg.K_d or event.key == pg.K_a:
-                        p1xvel = 0
+    def events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                if self.playing:
+                    self.playing = False
+                self.running = False
+    
+    
+    def draw(self):
+         # Draw 
+        self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        # Once everything is drawn, Flip the Display
+        pg.display.flip()
 
-            # Collision detection
-            for p in listOfPlayers:
-                if pg.Rect.colliderect(ball.getRect(), p.getRect()):
-                    ball.hit()
-    
-            # Updating the objects
-            p1.update(p1xvel)
-            p2.update(p2xvel, ball)
-            point = ball.update()
+    def show_start_screen(self):
+        pass
 
-            # -1 -> The Player has scored
-            # +1 -> The Computer has scored
-            #  0 -> None of them scored
-            if point == -1:
-                p1Score += 1
-            elif point == 1:
-                p2Score += 1
-    
-            # Reseting the Ball when someone scores a point
-            if point:   
-                ball.reset()
-    
-            # Displaying the objects on the screen
-            p1.display()
-            p2.display()
-            ball.display()
-    
-            # Displaying the scores of the players
-            p1.displayScore("Player : ", p1Score, 100, 20, WHITE)
-            p2.displayScore("Computer : ", p2Score, WIDTH-100, 20, WHITE)
-    
-            pg.display.update()
-            # Adjusting the frame rate
-            clock.tick(FPS)
-                        
+    def show_go_screen(self):
+        pass
 
-    if __name__ == "__main__":
-        main()
-        pg.quit()
+g = Game()
+g.show_start_screen()
+while g.running:
+    g.new()
+    g.show_go_screen()
+
+pg.quit()
+
+
+
+
+
+
