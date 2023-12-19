@@ -1,15 +1,17 @@
-# This file was created by: Chris Cozort
-# Content from Chris Bradfield; Kids Can Code
-# KidsCanCode - Game Development with Pygame video series
-# Video link: https://youtu.be/OmlQ0XCvIn0 
+# This file was created by: Ethan Chacko
 
-# game settings 
+# Sources:
+# content from kids can code: http://kidscancode.org/blog/
+# Create a Pong Game in Python - Pygame – GeeksforGeeks
+# Mr.Cozort(Cris Cozort)
+# My Father(Chacko, Antony) 
 
+
+# game settings
+# Making the Width, Height, and FPS 
 WIDTH = 600
 HEIGHT = 720
-FPS = 60
-
-# player properties
+FPS = 120
 
 
 # defining colors
